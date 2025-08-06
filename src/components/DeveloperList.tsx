@@ -15,6 +15,7 @@ import {
   Paper,
   useTheme,
   useMediaQuery,
+  Grid,
 } from '@mui/material';
 import {
   Refresh as RefreshIcon,
@@ -24,9 +25,11 @@ import {
   InsertDriveFile as FileIcon,
   Add as AddIcon,
   CheckCircle as CheckIcon,
+  ArrowBack as ArrowBackIcon,
 } from '@mui/icons-material';
 import { useAppContext } from '../context/AppContext';
 import { dataRepository } from '../services/dataRepository';
+import DeveloperDetail from './DeveloperDetail';
 import type { Developer } from '../types';
 
 interface DeveloperListProps {
@@ -38,7 +41,6 @@ const DeveloperList: React.FC<DeveloperListProps> = ({ onDeveloperSelect }) => {
   const [isInitializing, setIsInitializing] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
     const loadDevelopers = async () => {
@@ -216,6 +218,48 @@ const DeveloperList: React.FC<DeveloperListProps> = ({ onDeveloperSelect }) => {
               Import Data
             </Button>
           </Paper>
+        </Box>
+      </Container>
+    );
+  }
+
+  // Show developer detail view if a developer is selected
+  if (state.selectedDeveloper) {
+    return (
+      <Container maxWidth="xl">
+        <Box sx={{ py: 2 }}>
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 3,
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: 2
+          }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Button
+                variant="outlined"
+                startIcon={<ArrowBackIcon />}
+                onClick={() => dispatch({ type: 'SET_SELECTED_DEVELOPER', payload: null })}
+                size={isMobile ? 'small' : 'medium'}
+              >
+                Back to List
+              </Button>
+              <Typography variant="h4" component="h2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                Developer Details
+              </Typography>
+            </Box>
+            <Button
+              variant="contained"
+              startIcon={<RefreshIcon />}
+              onClick={handleRefresh}
+              size={isMobile ? 'small' : 'medium'}
+            >
+              Refresh
+            </Button>
+          </Box>
+
+          <DeveloperDetail developer={state.selectedDeveloper} />
         </Box>
       </Container>
     );
