@@ -1,0 +1,222 @@
+{
+  "repository": "kiro-demo",
+  "commits": [
+    {
+      "hash": "0e0a4ee1567490ad7474d18835999805bb1f1223",
+      "author": "Todd Greco",
+      "email": "mrballistic@gmail.com",
+      "timestamp": "2025-08-06T21:47:35Z",
+      "linesAdded": 1586,
+      "linesRemoved": 162,
+      "filesModified": [
+        ".kiro/specs/code-generation-tracker/tasks.md",
+        "src/components/DataImport.tsx",
+        "src/components/DeveloperList.tsx",
+        "src/components/ErrorBoundary.tsx",
+        "src/components/ErrorDisplay.test.tsx",
+        "src/components/ErrorDisplay.tsx",
+        "src/components/LoadingIndicator.test.tsx",
+        "src/components/LoadingIndicator.tsx",
+        "src/components/TimeRangeSelector.test.tsx",
+        "src/components/TimeRangeSelector.tsx",
+        "src/components/ValidationUtils.test.tsx",
+        "src/components/ValidationUtils.tsx"
+      ]
+    },
+    {
+      "hash": "461005c99b7e6b20d88fbd549964f55e90d99244",
+      "author": "Todd Greco",
+      "email": "mrballistic@gmail.com",
+      "timestamp": "2025-08-06T21:33:40Z",
+      "linesAdded": 988,
+      "linesRemoved": 3,
+      "filesModified": [
+        ".kiro/specs/code-generation-tracker/tasks.md",
+        "src/App.tsx",
+        "src/components/Dashboard.tsx",
+        "src/components/DeveloperList.tsx",
+        "src/components/DummyDataIndicator.test.tsx",
+        "src/components/DummyDataIndicator.tsx",
+        "src/components/Layout.tsx",
+        "src/components/SampleDataManager.tsx",
+        "src/hooks/useDummyData.test.ts",
+        "src/hooks/useDummyData.ts"
+      ]
+    },
+    {
+      "hash": "6ecd972649c1a6b57f9f3f15774c4deededb1b4f",
+      "author": "Todd Greco",
+      "email": "mrballistic@gmail.com",
+      "timestamp": "2025-08-06T21:19:27Z",
+      "linesAdded": 1023,
+      "linesRemoved": 11,
+      "filesModified": [
+        ".kiro/specs/code-generation-tracker/tasks.md",
+        "src/App.tsx",
+        "src/components/DataImport.test.tsx",
+        "src/components/DataImport.tsx"
+      ]
+    },
+    {
+      "hash": "c03b074baceab19b142577b31f78f8a0d1a60a1f",
+      "author": "Todd Greco",
+      "email": "mrballistic@gmail.com",
+      "timestamp": "2025-08-06T20:52:32Z",
+      "linesAdded": 1047,
+      "linesRemoved": 14,
+      "filesModified": [
+        ".kiro/specs/code-generation-tracker/tasks.md",
+        "src/components/DeveloperDetail.tsx",
+        "src/components/MetricsSummary.module.css",
+        "src/components/MetricsSummary.test.tsx",
+        "src/components/MetricsSummary.tsx",
+        "src/components/TimeRangeSelector.test.tsx",
+        "src/components/TimeRangeSelector.tsx",
+        "src/context/AppContext.tsx",
+        "src/types/index.ts"
+      ]
+    },
+    {
+      "hash": "d69e77f3ba85b3faa789388523b8e49a6f97f8a4",
+      "author": "Todd Greco",
+      "email": "mrballistic@gmail.com",
+      "timestamp": "2025-08-06T20:44:29Z",
+      "linesAdded": 726,
+      "linesRemoved": 1,
+      "filesModified": [
+        "package-lock.json",
+        "package.json",
+        "src/components/DeveloperDetail.test.tsx",
+        "src/components/DeveloperDetail.tsx",
+        "src/components/DeveloperList.tsx",
+        "src/components/MetricsChart.module.css",
+        "src/components/MetricsChart.test.tsx",
+        "src/components/MetricsChart.tsx"
+      ]
+    },
+    {
+      "hash": "5a9361e11b09d5f08fefbb1f953e33912fc9d7d7",
+      "author": "Todd Greco",
+      "email": "mrballistic@gmail.com",
+      "timestamp": "2025-08-06T20:41:25Z",
+      "linesAdded": 2528,
+      "linesRemoved": 197,
+      "filesModified": [
+        ".kiro/specs/code-generation-tracker/tasks.md",
+        "package-lock.json",
+        "package.json",
+        "src/App.css",
+        "src/App.tsx",
+        "src/components/Dashboard.tsx",
+        "src/components/DeveloperList.module.css",
+        "src/components/DeveloperList.test.tsx",
+        "src/components/DeveloperList.tsx",
+        "src/components/ErrorBoundary.tsx",
+        "src/components/Layout.tsx",
+        "src/context/AppContext.tsx",
+        "src/index.css",
+        "src/theme/ThemeProvider.tsx"
+      ]
+    },
+    {
+      "hash": "38c32b4c8f19bd961efcdad98469ec514f715ac0",
+      "author": "Todd Greco",
+      "email": "mrballistic@gmail.com",
+      "timestamp": "2025-08-06T20:29:25Z",
+      "linesAdded": 750,
+      "linesRemoved": 44,
+      "filesModified": [
+        ".kiro/specs/code-generation-tracker/tasks.md",
+        "package-lock.json",
+        "package.json",
+        "src/App.css",
+        "src/App.test.tsx",
+        "src/App.tsx",
+        "src/components/Dashboard.tsx",
+        "src/components/ErrorBoundary.tsx",
+        "src/components/Layout.module.css",
+        "src/components/Layout.tsx",
+        "src/components/LoadingSpinner.module.css",
+        "src/components/LoadingSpinner.tsx",
+        "src/context/AppContext.tsx",
+        "src/services/dataRepository.integration.test.ts"
+      ]
+    },
+    {
+      "hash": "6847ade48d67481460613ac3c40a6f9473f928e0",
+      "author": "Todd Greco",
+      "email": "mrballistic@gmail.com",
+      "timestamp": "2025-08-06T20:25:40Z",
+      "linesAdded": 613,
+      "linesRemoved": 11,
+      "filesModified": [
+        "src/services/dataRepository.integration.test.ts",
+        "src/services/dataRepository.test.ts",
+        "src/services/dataRepository.ts",
+        "src/services/dummyDataGenerator.ts",
+        "src/services/metricsCalculator.test.ts",
+        "src/services/metricsCalculator.ts",
+        "src/services/storageUtils.ts"
+      ]
+    },
+    {
+      "hash": "147234090135d053d83ff44b02e108bce10384d3",
+      "author": "Todd Greco",
+      "email": "mrballistic@gmail.com",
+      "timestamp": "2025-08-06T20:21:14Z",
+      "linesAdded": 1429,
+      "linesRemoved": 75,
+      "filesModified": [
+        ".kiro/specs/code-generation-tracker/tasks.md",
+        "src/services/dataRepository.test.ts",
+        "src/services/dataRepository.ts",
+        "src/services/dummyDataGenerator.ts",
+        "src/services/metricsCalculator.test.ts",
+        "src/services/metricsCalculator.ts",
+        "src/services/storageUtils.test.ts",
+        "src/services/storageUtils.ts",
+        "src/types/index.ts"
+      ]
+    },
+    {
+      "hash": "452326724a391c25f01c74353b491fc79724d2b5",
+      "author": "Todd Greco",
+      "email": "mrballistic@gmail.com",
+      "timestamp": "2025-08-06T20:13:33Z",
+      "linesAdded": 8589,
+      "linesRemoved": 0,
+      "filesModified": [
+        ".gitignore",
+        ".kiro/specs/code-generation-tracker/design.md",
+        ".kiro/specs/code-generation-tracker/requirements.md",
+        ".kiro/specs/code-generation-tracker/tasks.md",
+        "README.md",
+        "eslint.config.js",
+        "index.html",
+        "package-lock.json",
+        "package.json",
+        "public/vite.svg",
+        "src/App.css",
+        "src/App.test.tsx",
+        "src/App.tsx",
+        "src/assets/react.svg",
+        "src/components/.gitkeep",
+        "src/index.css",
+        "src/main.tsx",
+        "src/services/.gitkeep",
+        "src/services/dummyDataGenerator.test.ts",
+        "src/services/dummyDataGenerator.ts",
+        "src/services/storageUtils.test.ts",
+        "src/services/storageUtils.ts",
+        "src/test/setup.ts",
+        "src/types/index.test.ts",
+        "src/types/index.ts",
+        "src/vite-env.d.ts",
+        "tsconfig.app.json",
+        "tsconfig.json",
+        "tsconfig.node.json",
+        "vite.config.ts"
+      ]
+    }
+  ]
+}
