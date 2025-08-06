@@ -56,21 +56,21 @@
   - Write component tests for metrics display and data handling
   - _Requirements: 1.2, 1.3_
 
-- [-] 9. Integrate Chart.js for metrics visualization
+- [x] 9. Integrate Chart.js for metrics visualization
   - Install and configure Chart.js with React integration
   - Create MetricsChart component for time-series line charts
   - Implement chart configuration for lines added/removed over time
   - Add chart responsiveness and basic interaction features
   - _Requirements: 4.2, 1.3_
 
-- [ ] 10. Implement metrics summary component
+- [x] 10. Implement metrics summary component
   - Create MetricsSummary component displaying calculated ratios and totals
   - Add lines-per-file ratio display with proper formatting
   - Implement summary statistics for selected time periods
   - Write component tests for summary calculations and display
   - _Requirements: 2.1, 2.2, 2.3, 2.4_
 
-- [ ] 11. Build time range filtering functionality
+- [-] 11. Build time range filtering functionality
   - Create TimeRangeSelector component with date picker controls
   - Implement filtering logic to update charts and summaries based on selected range
   - Add preset time range options (last week, month, quarter)

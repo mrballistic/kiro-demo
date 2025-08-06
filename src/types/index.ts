@@ -75,6 +75,15 @@ export interface TimeRange {
   end: Date;
 }
 
+// Time range preset options
+export type TimeRangePreset = 'last-week' | 'last-month' | 'last-quarter' | 'all-time' | 'custom';
+
+export interface TimeRangeOption {
+  label: string;
+  value: TimeRangePreset;
+  getDates: () => { start: Date; end: Date };
+}
+
 // Chart.js integration types
 export interface ChartDataPoint {
   x: string | Date;

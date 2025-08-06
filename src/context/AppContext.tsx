@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import type { ReactNode } from 'react';
-import type { Developer, CodeMetric } from '../types';
+import type { Developer, CodeMetric, TimeRange } from '../types';
 
 interface AppState {
   developers: Developer[];
   selectedDeveloper: Developer | null;
+  timeRange: TimeRange;
   loading: boolean;
   error: string | null;
 }
@@ -14,12 +15,17 @@ type AppAction =
   | { type: 'SET_ERROR'; payload: string | null }
   | { type: 'SET_DEVELOPERS'; payload: Developer[] }
   | { type: 'SET_SELECTED_DEVELOPER'; payload: Developer | null }
+  | { type: 'SET_TIME_RANGE'; payload: TimeRange }
   | { type: 'ADD_DEVELOPER'; payload: Developer }
   | { type: 'UPDATE_DEVELOPER_METRICS'; payload: { developerId: string; metrics: CodeMetric[] } };
 
 const initialState: AppState = {
   developers: [],
   selectedDeveloper: null,
+  timeRange: {
+    start: new Date('2020-01-01'),
+    end: new Date(),
+  },
   loading: false,
   error: null,
 };
@@ -34,6 +40,8 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
       return { ...state, developers: action.payload };
     case 'SET_SELECTED_DEVELOPER':
       return { ...state, selectedDeveloper: action.payload };
+    case 'SET_TIME_RANGE':
+      return { ...state, timeRange: action.payload };
     case 'ADD_DEVELOPER':
       return { ...state, developers: [...state.developers, action.payload] };
     case 'UPDATE_DEVELOPER_METRICS':

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Box,
   Typography,
@@ -17,23 +17,48 @@ import {
   InsertDriveFile as FileIcon,
   Timeline as TimelineIcon,
 } from '@mui/icons-material';
-import { Developer } from '../types';
+import type { Developer, TimeRange } from '../types';
 import MetricsChart from './MetricsChart';
+import MetricsSummary from './MetricsSummary';
+import TimeRangeSelector from './TimeRangeSelector';
+import { metricsCalculator } from '../services/metricsCalculator';
 
 interface DeveloperDetailProps {
   developer: Developer;
 }
 
 const DeveloperDetail: React.FC<DeveloperDetailProps> = ({ developer }) => {
-  // Calculate summary statistics
-  const totalCommits = developer.metrics.length;
-  const totalLinesAdded = developer.metrics.reduce((sum, metric) => sum + metric.linesAdded, 0);
-  const totalLinesRemoved = developer.metrics.reduce((sum, metric) => sum + metric.linesRemoved, 0);
-  const totalFilesModified = developer.metrics.reduce((sum, metric) => sum + metric.filesModified, 0);
+  // Initialize time range state
+  const [timeRange, setTimeRange] = useState<TimeRange>(() => {
+    const sortedMetrics = [...developer.metrics].sort(
+      (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+    );
+    
+    if (sortedMetrics.length === 0) {
+      const now = new Date();
+      return { start: now, end: now };
+    }
+    
+    return {
+      start: new Date(sortedMetrics[0].timestamp),
+      end: new Date(sortedMetrics[sortedMetrics.length - 1].timestamp),
+    };
+  });
+
+  // Filter metrics based on selected time range
+  const filteredMetrics = useMemo(() => {
+    return metricsCalculator.aggregateByTimeRange(developer.metrics, timeRange);
+  }, [developer.metrics, timeRange]);
+
+  // Calculate summary statistics for filtered metrics
+  const totalCommits = filteredMetrics.length;
+  const totalLinesAdded = filteredMetrics.reduce((sum, metric) => sum + metric.linesAdded, 0);
+  const totalLinesRemoved = filteredMetrics.reduce((sum, metric) => sum + metric.linesRemoved, 0);
+  const totalFilesModified = filteredMetrics.reduce((sum, metric) => sum + metric.filesModified, 0);
   const netLinesChanged = totalLinesAdded - totalLinesRemoved;
   const linesPerFileRatio = totalFilesModified > 0 ? (totalLinesAdded / totalFilesModified) : 0;
 
-  // Get date range
+  // Get date range for display
   const sortedMetrics = [...developer.metrics].sort(
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
@@ -150,6 +175,22 @@ const DeveloperDetail: React.FC<DeveloperDetailProps> = ({ developer }) => {
         </Stack>
       </Paper>
 
+      {/* Time Range Selector */}
+      <TimeRangeSelector
+        selectedRange={timeRange}
+        onRangeChange={setTimeRange}
+      />
+
+      {/* Metrics Summary */}
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <TimelineIcon />
+          Filtered Metrics Summary
+        </Typography>
+        <Divider sx={{ mb: 2 }} />
+        <MetricsSummary metrics={filteredMetrics} />
+      </Paper>
+
       {/* Metrics Chart */}
       <Paper sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -158,8 +199,8 @@ const DeveloperDetail: React.FC<DeveloperDetailProps> = ({ developer }) => {
         </Typography>
         <Divider sx={{ mb: 2 }} />
         <MetricsChart
-          metrics={developer.metrics}
-          title={`${developer.name}'s Code Generation Metrics`}
+          metrics={filteredMetrics}
+          title={`${developer.name}'s Code Generation Metrics (${timeRange.start.toLocaleDateString()} - ${timeRange.end.toLocaleDateString()})`}
           height={400}
         />
       </Paper>
