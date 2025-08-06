@@ -16,6 +16,7 @@ import {
   Dashboard as DashboardIcon,
   People as PeopleIcon,
   CloudUpload as ImportIcon,
+  Science as SampleIcon,
 } from '@mui/icons-material';
 
 interface LayoutProps {
@@ -35,6 +36,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         return 1;
       case '/import':
         return 2;
+      case '/sample-data':
+        return 3;
       default:
         return 0;
     }
@@ -121,6 +124,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               label="Import Data"
               component={Link}
               to="/import"
+              iconPosition={isMobile ? 'top' : 'start'}
+            />
+            <Tab
+              icon={<SampleIcon />}
+              label="Sample Data"
+              component={Link}
+              to="/sample-data"
               iconPosition={isMobile ? 'top' : 'start'}
             />
           </Tabs>

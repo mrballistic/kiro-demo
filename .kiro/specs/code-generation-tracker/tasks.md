@@ -84,7 +84,7 @@
   - Create user feedback for successful imports and validation errors
   - _Requirements: 3.1, 3.2, 3.3, 3.4_
 
-- [-] 13. Add dummy data indicators and sample data management
+- [x] 13. Add dummy data indicators and sample data management
   - Implement visual indicators when displaying dummy/sample data
   - Create sample data toggle functionality for demonstration purposes
   - Add clear labeling and user guidance for dummy data features

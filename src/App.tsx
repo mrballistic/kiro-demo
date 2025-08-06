@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import DeveloperList from './components/DeveloperList';
 import DataImport from './components/DataImport';
+import SampleDataManager from './components/SampleDataManager';
 import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
 
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/developers" element={<DevelopersPage />} />
                 <Route path="/import" element={<DataImport />} />
+                <Route path="/sample-data" element={<SampleDataManager />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>

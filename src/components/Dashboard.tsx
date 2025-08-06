@@ -15,8 +15,12 @@ import {
   Assessment as AssessmentIcon,
   Timeline as TimelineIcon,
 } from '@mui/icons-material';
+import DummyDataIndicator from './DummyDataIndicator';
+import { useDummyData } from '../hooks/useDummyData';
 
 const Dashboard: React.FC = () => {
+  const { isDummyData } = useDummyData();
+
   return (
     <Container maxWidth="xl">
       <Box sx={{ py: 2 }}>
@@ -29,6 +33,8 @@ const Dashboard: React.FC = () => {
           <DashboardIcon />
           Dashboard
         </Typography>
+
+        <DummyDataIndicator isDummyData={isDummyData} />
 
         <Alert severity="info" sx={{ mb: 4 }}>
           <AlertTitle>Welcome to Code Generation Tracker</AlertTitle>

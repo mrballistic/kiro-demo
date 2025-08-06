@@ -15,7 +15,7 @@ import {
   Paper,
   useTheme,
   useMediaQuery,
-  Grid,
+
 } from '@mui/material';
 import {
   Refresh as RefreshIcon,
@@ -30,6 +30,8 @@ import {
 import { useAppContext } from '../context/AppContext';
 import { dataRepository } from '../services/dataRepository';
 import DeveloperDetail from './DeveloperDetail';
+import DummyDataIndicator from './DummyDataIndicator';
+import { useDummyData } from '../hooks/useDummyData';
 import type { Developer } from '../types';
 
 interface DeveloperListProps {
@@ -41,6 +43,7 @@ const DeveloperList: React.FC<DeveloperListProps> = ({ onDeveloperSelect }) => {
   const [isInitializing, setIsInitializing] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isDummyData, refreshDummyDataStatus } = useDummyData();
 
   useEffect(() => {
     const loadDevelopers = async () => {
@@ -79,13 +82,16 @@ const DeveloperList: React.FC<DeveloperListProps> = ({ onDeveloperSelect }) => {
     onDeveloperSelect?.(developer);
   };
 
-  const handleRefresh = async () => {
+    const handleRefresh = async () => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       dispatch({ type: 'SET_ERROR', payload: null });
 
       const developers = await dataRepository.getDevelopers();
       dispatch({ type: 'SET_DEVELOPERS', payload: developers });
+      
+      // Refresh dummy data status after loading
+      await refreshDummyDataStatus();
     } catch (error) {
       console.error('Failed to refresh developers:', error);
       dispatch({
@@ -279,6 +285,9 @@ const DeveloperList: React.FC<DeveloperListProps> = ({ onDeveloperSelect }) => {
           <Typography variant="h4" component="h2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <PeopleIcon />
             Developers ({state.developers.length})
+            {isDummyData && (
+              <DummyDataIndicator isDummyData={isDummyData} compact />
+            )}
           </Typography>
           <Button
             variant="contained"
@@ -289,6 +298,8 @@ const DeveloperList: React.FC<DeveloperListProps> = ({ onDeveloperSelect }) => {
             Refresh
           </Button>
         </Box>
+
+        <DummyDataIndicator isDummyData={isDummyData} />
 
         <Box sx={{
           display: 'grid',
