@@ -508,7 +508,8 @@ const DataImport: React.FC = () => {
         <Box
           component="pre"
           sx={{
-            backgroundColor: 'grey.100',
+            backgroundColor: theme => theme.palette.mode === 'dark' ? 'grey.900' : 'grey.100',
+            color: theme => theme.palette.text.primary,
             p: 2,
             borderRadius: 1,
             overflow: 'auto',

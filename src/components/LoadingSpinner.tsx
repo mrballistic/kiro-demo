@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './LoadingSpinner.module.css';
+import { Box, Typography, CircularProgress } from '@mui/material';
 
 interface LoadingSpinnerProps {
   message?: string;
@@ -7,10 +7,20 @@ interface LoadingSpinnerProps {
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ message = 'Loading...' }) => {
   return (
-    <div className={styles.loadingContainer}>
-      <div className={styles.spinner}></div>
-      <p className={styles.message}>{message}</p>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        p: 4,
+      }}
+    >
+      <CircularProgress size={40} sx={{ mb: 2 }} />
+      <Typography variant="body1" color="text.secondary">
+        {message}
+      </Typography>
+    </Box>
   );
 };
 

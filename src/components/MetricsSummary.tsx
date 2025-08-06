@@ -1,7 +1,14 @@
 import React from 'react';
+import { 
+  Paper, 
+  Typography, 
+  Box,
+  Card,
+  CardContent,
+  useTheme
+} from '@mui/material';
 import type { MetricsSummary as MetricsSummaryType, CodeMetric } from '../types/index.js';
 import { metricsCalculator } from '../services/metricsCalculator.js';
-import styles from './MetricsSummary.module.css';
 
 interface MetricsSummaryProps {
   metrics: CodeMetric[];
@@ -9,6 +16,7 @@ interface MetricsSummaryProps {
 }
 
 const MetricsSummary: React.FC<MetricsSummaryProps> = ({ metrics, className }) => {
+  const theme = useTheme();
   const summary: MetricsSummaryType = metricsCalculator.calculateSummary(metrics);
 
   const formatNumber = (num: number): string => {
@@ -27,53 +35,131 @@ const MetricsSummary: React.FC<MetricsSummaryProps> = ({ metrics, className }) =
   };
 
   return (
-    <div className={`${styles.metricsSummary} ${className || ''}`}>
-      <h3>Metrics Summary</h3>
+    <Paper sx={{ p: 3, mb: 2 }} className={className}>
+      <Typography variant="h5" component="h3" gutterBottom fontWeight={600}>
+        Metrics Summary
+      </Typography>
       
-      <div className={styles.summaryGrid}>
-        <div className={styles.summaryItem}>
-          <div className={styles.summaryLabel}>Total Lines Added</div>
-          <div className={`${styles.summaryValue} ${styles.linesAdded}`}>
-            {formatNumber(summary.totalLinesAdded)}
-          </div>
-        </div>
+      <Box sx={{ 
+        display: 'grid', 
+        gridTemplateColumns: { 
+          xs: '1fr', 
+          sm: 'repeat(2, 1fr)', 
+          md: 'repeat(3, 1fr)' 
+        }, 
+        gap: 2 
+      }}>
+        <Card 
+          sx={{ 
+            borderLeft: 4, 
+            borderLeftColor: theme.palette.success.main,
+            '&:hover': { transform: 'translateY(-1px)', boxShadow: 2 }
+          }}
+        >
+          <CardContent>
+            <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.5 }}>
+              Total Lines Added
+            </Typography>
+            <Typography variant="h4" component="div" sx={{ color: theme.palette.success.main, fontWeight: 700 }}>
+              {formatNumber(summary.totalLinesAdded)}
+            </Typography>
+          </CardContent>
+        </Card>
 
-        <div className={styles.summaryItem}>
-          <div className={styles.summaryLabel}>Total Lines Removed</div>
-          <div className={`${styles.summaryValue} ${styles.linesRemoved}`}>
-            {formatNumber(summary.totalLinesRemoved)}
-          </div>
-        </div>
+        <Card 
+          sx={{ 
+            borderLeft: 4, 
+            borderLeftColor: theme.palette.error.main,
+            '&:hover': { transform: 'translateY(-1px)', boxShadow: 2 }
+          }}
+        >
+          <CardContent>
+            <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.5 }}>
+              Total Lines Removed
+            </Typography>
+            <Typography variant="h4" component="div" sx={{ color: theme.palette.error.main, fontWeight: 700 }}>
+              {formatNumber(summary.totalLinesRemoved)}
+            </Typography>
+          </CardContent>
+        </Card>
 
-        <div className={styles.summaryItem}>
-          <div className={styles.summaryLabel}>Total Files Modified</div>
-          <div className={`${styles.summaryValue} ${styles.filesModified}`}>
-            {formatNumber(summary.totalFiles)}
-          </div>
-        </div>
+        <Card 
+          sx={{ 
+            borderLeft: 4, 
+            borderLeftColor: theme.palette.info.main,
+            '&:hover': { transform: 'translateY(-1px)', boxShadow: 2 }
+          }}
+        >
+          <CardContent>
+            <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.5 }}>
+              Total Files Modified
+            </Typography>
+            <Typography variant="h4" component="div" sx={{ color: theme.palette.info.main, fontWeight: 700 }}>
+              {formatNumber(summary.totalFiles)}
+            </Typography>
+          </CardContent>
+        </Card>
 
-        <div className={styles.summaryItem}>
-          <div className={styles.summaryLabel}>Lines per File Ratio</div>
-          <div className={`${styles.summaryValue} ${styles.linesPerFileRatio}`}>
-            {formatRatio(summary.linesPerFileRatio)}
-          </div>
-        </div>
+        <Card 
+          sx={{ 
+            borderLeft: 4, 
+            borderLeftColor: theme.palette.secondary.main,
+            '&:hover': { transform: 'translateY(-1px)', boxShadow: 2 }
+          }}
+        >
+          <CardContent>
+            <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.5 }}>
+              Lines per File Ratio
+            </Typography>
+            <Typography variant="h4" component="div" sx={{ color: theme.palette.secondary.main, fontWeight: 700 }}>
+              {formatRatio(summary.linesPerFileRatio)}
+            </Typography>
+          </CardContent>
+        </Card>
 
-        <div className={styles.summaryItem}>
-          <div className={styles.summaryLabel}>Net Lines Changed</div>
-          <div className={`${styles.summaryValue} ${styles.netLines} ${summary.netLinesChanged >= 0 ? styles.positive : styles.negative}`}>
-            {summary.netLinesChanged >= 0 ? '+' : ''}{formatNumber(summary.netLinesChanged)}
-          </div>
-        </div>
+        <Card 
+          sx={{ 
+            borderLeft: 4, 
+            borderLeftColor: summary.netLinesChanged >= 0 ? theme.palette.success.main : theme.palette.error.main,
+            '&:hover': { transform: 'translateY(-1px)', boxShadow: 2 }
+          }}
+        >
+          <CardContent>
+            <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.5 }}>
+              Net Lines Changed
+            </Typography>
+            <Typography 
+              variant="h4" 
+              component="div" 
+              sx={{ 
+                color: summary.netLinesChanged >= 0 ? theme.palette.success.main : theme.palette.error.main, 
+                fontWeight: 700 
+              }}
+            >
+              {summary.netLinesChanged >= 0 ? '+' : ''}{formatNumber(summary.netLinesChanged)}
+            </Typography>
+          </CardContent>
+        </Card>
 
-        <div className={`${styles.summaryItem} ${styles.timeRange}`}>
-          <div className={styles.summaryLabel}>Time Period</div>
-          <div className={styles.summaryValue}>
-            {formatDateRange(summary.timeRange.start, summary.timeRange.end)}
-          </div>
-        </div>
-      </div>
-    </div>
+        <Card 
+          sx={{ 
+            borderLeft: 4, 
+            borderLeftColor: theme.palette.warning.main,
+            '&:hover': { transform: 'translateY(-1px)', boxShadow: 2 },
+            gridColumn: { xs: '1', md: 'span 2' }
+          }}
+        >
+          <CardContent>
+            <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.5 }}>
+              Time Period
+            </Typography>
+            <Typography variant="h5" component="div" sx={{ color: theme.palette.warning.main, fontWeight: 700 }}>
+              {formatDateRange(summary.timeRange.start, summary.timeRange.end)}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Box>
+    </Paper>
   );
 };
 

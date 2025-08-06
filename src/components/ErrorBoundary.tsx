@@ -249,12 +249,13 @@ class ErrorBoundary extends Component<Props, State> {
                   fontSize: '0.75rem',
                   fontFamily: 'monospace',
                   p: 2,
-                  backgroundColor: 'grey.100',
+                  backgroundColor: theme => theme.palette.mode === 'dark' ? 'grey.900' : 'grey.100',
+                  color: theme => theme.palette.text.primary,
                   borderRadius: 1,
                   maxHeight: 300,
                   overflow: 'auto',
                   border: 1,
-                  borderColor: 'grey.300',
+                  borderColor: theme => theme.palette.mode === 'dark' ? 'grey.700' : 'grey.300',
                 }}
               >
                 {this.formatErrorDetails()}

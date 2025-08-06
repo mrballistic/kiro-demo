@@ -7,10 +7,8 @@ describe('LoadingSpinner', () => {
     render(<LoadingSpinner />);
 
     expect(screen.getByText('Loading...')).toBeInTheDocument();
-    // Check for spinner by finding a div inside the container
-    const container = screen.getByText('Loading...').parentElement;
-    const spinnerDiv = container?.querySelector('div:first-child');
-    expect(spinnerDiv).toBeInTheDocument();
+    // Check for MUI CircularProgress component
+    expect(document.querySelector('[role="progressbar"]')).toBeInTheDocument();
   });
 
   it('renders with custom message', () => {
@@ -24,28 +22,28 @@ describe('LoadingSpinner', () => {
   it('renders with empty message', () => {
     render(<LoadingSpinner message="" />);
 
-    // For empty message, just check that the paragraph element exists
-    const paragraphs = screen.getAllByRole('generic', { hidden: true });
-    expect(paragraphs.length).toBeGreaterThan(0);
+    // For empty message, the text should be empty
+    const text = screen.getByText('');
+    expect(text).toBeInTheDocument();
     
-    // Check that spinner container is present
-    const container = document.querySelector('div[class*="loadingContainer"]');
-    expect(container).toBeInTheDocument();
+    // Check that CircularProgress is present
+    expect(document.querySelector('[role="progressbar"]')).toBeInTheDocument();
   });
 
-  it('has correct CSS module classes', () => {
+  it('has correct MUI component structure', () => {
     render(<LoadingSpinner message="Test message" />);
 
-    // Check for CSS module class patterns
+    // Check for Typography component with correct text
     const message = screen.getByText('Test message');
-    const messageClassList = Array.from(message.classList);
-    expect(messageClassList.some(cls => cls.includes('message'))).toBe(true);
-    expect(message.tagName).toBe('P');
+    expect(message).toBeInTheDocument();
 
-    // Check container has loadingContainer class pattern
-    const container = message.parentElement;
-    const containerClassList = Array.from(container?.classList || []);
-    expect(containerClassList.some(cls => cls.includes('loadingContainer'))).toBe(true);
+    // Check for CircularProgress component
+    const progress = document.querySelector('[role="progressbar"]');
+    expect(progress).toBeInTheDocument();
+
+    // Check container is a Box (div)
+    const container = message.closest('div');
+    expect(container).toBeInTheDocument();
   });
 
   it('renders accessibility-friendly structure', () => {
@@ -54,14 +52,14 @@ describe('LoadingSpinner', () => {
     // The message should be accessible to screen readers
     const message = screen.getByText('Loading content');
     expect(message).toBeInTheDocument();
-    expect(message.tagName).toBe('P');
 
-    // Container should have proper structure
-    const container = message.parentElement;
-    expect(container).toBeInTheDocument();
+    // CircularProgress should have proper role
+    const progress = document.querySelector('[role="progressbar"]');
+    expect(progress).toBeInTheDocument();
     
-    // Should have two child divs: spinner and message
-    expect(container?.children).toHaveLength(2);
+    // Should have proper structure with Box container
+    const container = message.closest('div');
+    expect(container).toBeInTheDocument();
   });
 
   it('handles long messages gracefully', () => {
@@ -78,14 +76,15 @@ describe('LoadingSpinner', () => {
     expect(screen.getByText(specialMessage)).toBeInTheDocument();
   });
 
-  it('has spinner element with correct structure', () => {
+  it('has CircularProgress component with correct structure', () => {
     render(<LoadingSpinner />);
 
-    // Find the container and check for spinner div
-    const container = document.querySelector('div[class*="loadingContainer"]');
-    expect(container).toBeInTheDocument();
+    // Check for CircularProgress component
+    const progress = document.querySelector('[role="progressbar"]');
+    expect(progress).toBeInTheDocument();
     
-    const spinner = container?.querySelector('div[class*="spinner"]');
-    expect(spinner).toBeInTheDocument();
+    // Check it's a CircularProgress by looking for SVG
+    const svg = progress?.querySelector('svg');
+    expect(svg).toBeInTheDocument();
   });
 });

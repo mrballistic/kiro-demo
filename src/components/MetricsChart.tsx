@@ -12,8 +12,9 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
-import { CodeMetric } from '../types';
-import styles from './MetricsChart.module.css';
+import { useTheme } from '@mui/material/styles';
+import { Box, Paper, Typography } from '@mui/material';
+import type { CodeMetric } from '../types';
 
 // Register Chart.js components
 ChartJS.register(
@@ -38,6 +39,9 @@ export const MetricsChart: React.FC<MetricsChartProps> = ({
   title = 'Code Metrics Over Time',
   height = 400,
 }) => {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+  
   // Sort metrics by timestamp
   const sortedMetrics = [...metrics].sort(
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
@@ -50,16 +54,16 @@ export const MetricsChart: React.FC<MetricsChartProps> = ({
       {
         label: 'Lines Added',
         data: sortedMetrics.map(metric => metric.linesAdded),
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.main + '20',
         fill: false,
         tension: 0.1,
       },
       {
         label: 'Lines Removed',
         data: sortedMetrics.map(metric => metric.linesRemoved),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: theme.palette.error.main,
+        backgroundColor: theme.palette.error.main + '20',
         fill: false,
         tension: 0.1,
       },
@@ -72,10 +76,14 @@ export const MetricsChart: React.FC<MetricsChartProps> = ({
     plugins: {
       legend: {
         position: 'top' as const,
+        labels: {
+          color: theme.palette.text.primary,
+        },
       },
       title: {
         display: true,
         text: title,
+        color: theme.palette.text.primary,
       },
     },
     scales: {
@@ -87,6 +95,13 @@ export const MetricsChart: React.FC<MetricsChartProps> = ({
         title: {
           display: true,
           text: 'Date',
+          color: theme.palette.text.primary,
+        },
+        ticks: {
+          color: theme.palette.text.secondary,
+        },
+        grid: {
+          color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
         },
       },
       y: {
@@ -94,6 +109,13 @@ export const MetricsChart: React.FC<MetricsChartProps> = ({
         title: {
           display: true,
           text: 'Lines of Code',
+          color: theme.palette.text.primary,
+        },
+        ticks: {
+          color: theme.palette.text.secondary,
+        },
+        grid: {
+          color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
         },
       },
     },
@@ -109,20 +131,33 @@ export const MetricsChart: React.FC<MetricsChartProps> = ({
 
   if (metrics.length === 0) {
     return (
-      <div className={styles.chartContainer}>
-        <div className={styles.emptyState} style={{ height }}>
-          <p>No metrics data available to display</p>
-        </div>
-      </div>
+      <Paper
+        sx={{
+          p: 2,
+          mb: 2,
+          height,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography 
+          variant="body2" 
+          color="text.secondary" 
+          fontStyle="italic"
+        >
+          No metrics data available to display
+        </Typography>
+      </Paper>
     );
   }
 
   return (
-    <div className={styles.chartContainer}>
-      <div className={styles.chartWrapper} style={{ height }}>
+    <Paper sx={{ p: 2, mb: 2 }}>
+      <Box sx={{ height, position: 'relative' }}>
         <Line data={chartData} options={options} />
-      </div>
-    </div>
+      </Box>
+    </Paper>
   );
 };
 
