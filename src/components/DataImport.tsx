@@ -4,9 +4,6 @@ import {
   Paper,
   Typography,
   Button,
-  LinearProgress,
-  Alert,
-  AlertTitle,
   List,
   ListItem,
   ListItemIcon,
@@ -29,6 +26,8 @@ import {
 } from '@mui/icons-material';
 import { useAppContext } from '../context/AppContext';
 import { dataRepository } from '../services/dataRepository';
+import LoadingIndicator from './LoadingIndicator';
+import ErrorDisplay from './ErrorDisplay';
 import type { SnapshotData } from '../types';
 import { isSnapshotData } from '../types';
 
@@ -361,62 +360,78 @@ const DataImport: React.FC = () => {
 
       {/* Progress Indicator */}
       {importing && (
-        <Paper elevation={1} sx={{ p: 2, mb: 3 }}>
-          <Typography variant="body2" gutterBottom>
-            Importing data...
-          </Typography>
-          <LinearProgress />
-        </Paper>
+        <LoadingIndicator 
+          message="Importing data..."
+          variant="linear" 
+          size="medium"
+          minHeight={100}
+        />
       )}
 
       {/* Import Results */}
       {importResult && (
-        <Alert
-          severity={importResult.success ? 'success' : 'error'}
-          sx={{ mb: 3 }}
-          action={
-            <IconButton
-              color="inherit"
-              size="small"
-              onClick={resetImport}
-              aria-label="reset import"
-            >
-              <RefreshIcon />
-            </IconButton>
-          }
-        >
-          <AlertTitle>
-            {importResult.success ? 'Import Successful' : 'Import Failed'}
-          </AlertTitle>
-          {importResult.message}
+        <Box sx={{ mb: 3 }}>
+          {importResult.success ? (
+            <Card sx={{ backgroundColor: 'success.light', color: 'success.contrastText' }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <SuccessIcon />
+                    <Typography variant="h6">
+                      Import Successful
+                    </Typography>
+                  </Box>
+                  <IconButton
+                    color="inherit"
+                    size="small"
+                    onClick={resetImport}
+                    aria-label="reset import"
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                </Box>
+                
+                <Typography variant="body1" sx={{ mb: 2 }}>
+                  {importResult.message}
+                </Typography>
 
-          {/* Success Details */}
-          {importResult.success && importResult.details && (
-            <Box sx={{ mt: 2 }}>
-              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 1 }}>
-                <Chip
-                  size="small"
-                  icon={<SuccessIcon />}
-                  label={`${importResult.details.developersCount} developers`}
-                  color="success"
-                  variant="outlined"
-                />
-                <Chip
-                  size="small"
-                  icon={<SuccessIcon />}
-                  label={`${importResult.details.metricsCount} commits`}
-                  color="success"
-                  variant="outlined"
-                />
-                <Chip
-                  size="small"
-                  label={importResult.details.repository}
-                  variant="outlined"
-                />
-              </Box>
-            </Box>
+                {/* Success Details */}
+                {importResult.details && (
+                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                    <Chip
+                      size="small"
+                      icon={<SuccessIcon />}
+                      label={`${importResult.details.developersCount} developers`}
+                      color="success"
+                      variant="outlined"
+                    />
+                    <Chip
+                      size="small"
+                      icon={<SuccessIcon />}
+                      label={`${importResult.details.metricsCount} commits`}
+                      color="success"
+                      variant="outlined"
+                    />
+                    <Chip
+                      size="small"
+                      label={importResult.details.repository}
+                      variant="outlined"
+                    />
+                  </Box>
+                )}
+              </CardContent>
+            </Card>
+          ) : (
+            <ErrorDisplay
+              error={importResult.message}
+              severity="error"
+              showRetry={false}
+              onDismiss={resetImport}
+              dismissible
+              title="Import Failed"
+            />
           )}
-        </Alert>
+        </Box>
       )}
 
       {/* Validation Errors */}

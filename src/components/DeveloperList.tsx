@@ -6,9 +6,6 @@ import {
   CardContent,
   CardActionArea,
   Button,
-  CircularProgress,
-  Alert,
-  AlertTitle,
   Chip,
   Stack,
   Container,
@@ -31,6 +28,8 @@ import { useAppContext } from '../context/AppContext';
 import { dataRepository } from '../services/dataRepository';
 import DeveloperDetail from './DeveloperDetail';
 import DummyDataIndicator from './DummyDataIndicator';
+import LoadingIndicator from './LoadingIndicator';
+import ErrorDisplay from './ErrorDisplay';
 import { useDummyData } from '../hooks/useDummyData';
 import type { Developer } from '../types';
 
@@ -121,12 +120,12 @@ const DeveloperList: React.FC<DeveloperListProps> = ({ onDeveloperSelect }) => {
             </Typography>
           </Box>
 
-          <Paper sx={{ p: 4, textAlign: 'center' }}>
-            <CircularProgress size={48} sx={{ mb: 2 }} />
-            <Typography variant="h6" color="text.secondary">
-              {isInitializing ? 'Initializing with sample data...' : 'Loading developers...'}
-            </Typography>
-          </Paper>
+          <LoadingIndicator 
+            size="large"
+            message={isInitializing ? 'Initializing with sample data...' : 'Loading developers...'}
+            variant="circular"
+            inline={false}
+          />
         </Box>
       </Container>
     );
@@ -158,19 +157,13 @@ const DeveloperList: React.FC<DeveloperListProps> = ({ onDeveloperSelect }) => {
             </Button>
           </Box>
 
-          <Alert severity="error" sx={{ mb: 2 }}>
-            <AlertTitle>Error loading developers</AlertTitle>
-            {state.error}
-          </Alert>
-
-          <Button
-            variant="contained"
-            color="error"
-            onClick={handleRefresh}
-            fullWidth={isMobile}
-          >
-            Try Again
-          </Button>
+          <ErrorDisplay
+            error={state.error}
+            onRetry={handleRefresh}
+            severity="error"
+            showRetry
+            title="Error loading developers"
+          />
         </Box>
       </Container>
     );

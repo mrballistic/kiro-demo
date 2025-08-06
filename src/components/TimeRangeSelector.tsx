@@ -1,10 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import {
   Box,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   TextField,
   Paper,
   Typography,
@@ -15,6 +11,7 @@ import {
   DateRange as DateRangeIcon,
   CalendarToday as CalendarIcon,
 } from '@mui/icons-material';
+import { ValidationUtils, ValidatedSelect } from './ValidationUtils';
 import type { TimeRange, TimeRangePreset, TimeRangeOption } from '../types';
 
 interface TimeRangeSelectorProps {
@@ -159,21 +156,19 @@ const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
 
       <Stack spacing={2}>
         {/* Preset Selection */}
-        <FormControl fullWidth size="small">
-          <InputLabel id="time-range-preset-label">Time Range</InputLabel>
-          <Select
-            labelId="time-range-preset-label"
-            value={selectedPreset}
-            label="Time Range"
-            onChange={(e) => handlePresetChange(e.target.value as TimeRangePreset)}
-          >
-            {timeRangeOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <ValidatedSelect
+          name="timeRange"
+          label="Time Range"
+          value={selectedPreset}
+          onChange={(_, value) => handlePresetChange(value as TimeRangePreset)}
+          options={timeRangeOptions.map(option => ({
+            value: option.value,
+            label: option.label
+          }))}
+          fullWidth
+          size="small"
+          required
+        />
 
         {/* Custom Date Range Inputs */}
         {selectedPreset === 'custom' && (

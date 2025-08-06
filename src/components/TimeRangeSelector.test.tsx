@@ -38,7 +38,7 @@ describe('TimeRangeSelector', () => {
     );
     
     expect(screen.getByText('Time Range Filter')).toBeInTheDocument();
-    expect(screen.getByLabelText('Time Range')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Time Range/)).toBeInTheDocument();
     expect(screen.getByText(/Current Range:/)).toBeInTheDocument();
   });
 
@@ -65,7 +65,7 @@ describe('TimeRangeSelector', () => {
     
     // Component should render without errors
     expect(screen.getByText('Time Range Filter')).toBeInTheDocument();
-    expect(screen.getByLabelText('Time Range')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Time Range/)).toBeInTheDocument();
   });
 
   it('handles time range preset calculations', () => {
