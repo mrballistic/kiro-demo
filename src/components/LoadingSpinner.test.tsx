@@ -22,12 +22,12 @@ describe('LoadingSpinner', () => {
   it('renders with empty message', () => {
     render(<LoadingSpinner message="" />);
 
-    // For empty message, the text should be empty
-    const text = screen.getByText('');
-    expect(text).toBeInTheDocument();
-    
-    // Check that CircularProgress is present
+    // For empty message, check that CircularProgress is present
     expect(document.querySelector('[role="progressbar"]')).toBeInTheDocument();
+    
+    // Check that there's a Typography component even if it's empty
+    const typographyElements = document.querySelectorAll('p.MuiTypography-root');
+    expect(typographyElements.length).toBeGreaterThan(0);
   });
 
   it('has correct MUI component structure', () => {

@@ -214,10 +214,10 @@ const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
         {/* Current Range Display */}
         <Box sx={{ 
           p: 1.5, 
-          bgcolor: 'grey.50', 
+          bgcolor: theme => theme.palette.mode === 'dark' ? 'grey.900' : 'grey.50', 
           borderRadius: 1,
           border: '1px solid',
-          borderColor: 'grey.200'
+          borderColor: theme => theme.palette.mode === 'dark' ? 'grey.700' : 'grey.200'
         }}>
           <Typography variant="body2" color="text.secondary">
             Current Range: {formatDateForDisplay(selectedRange.start)} - {formatDateForDisplay(selectedRange.end)}
