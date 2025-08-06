@@ -52,7 +52,7 @@ export class DummyDataGenerator {
 
     // Generate different activity patterns for variety
     const activityPattern = this.getRandomActivityPattern();
-    
+
     let metricId = 1;
     const currentDate = new Date(startDate);
 
@@ -60,10 +60,10 @@ export class DummyDataGenerator {
       // Skip weekends for more realistic data
       if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
         const shouldHaveActivity = this.shouldGenerateActivity(activityPattern, currentDate);
-        
+
         if (shouldHaveActivity) {
           const numCommits = Math.floor(Math.random() * 3) + 1; // 1-3 commits per day
-          
+
           for (let i = 0; i < numCommits; i++) {
             const metric = this.generateSingleMetric(
               `metric-${developerId}-${String(metricId).padStart(4, '0')}`,
@@ -76,7 +76,7 @@ export class DummyDataGenerator {
           }
         }
       }
-      
+
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
@@ -105,7 +105,7 @@ export class DummyDataGenerator {
   generateSnapshotData(): SnapshotData {
     const repository = this.repositories[Math.floor(Math.random() * this.repositories.length)];
     const { developers, allMetrics } = this.generateCompleteDataset();
-    
+
     const commits: CommitData[] = allMetrics.map(metric => ({
       hash: this.generateCommitHash(),
       author: developers.find(d => d.id === metric.developerId)?.name || 'Unknown',
@@ -127,17 +127,17 @@ export class DummyDataGenerator {
   ): CodeMetric {
     const baseActivity = activityPattern.baseActivity;
     const variance = activityPattern.variance;
-    
+
     // Generate lines added with some randomness
     const linesAdded = Math.max(0, Math.floor(
       (Math.random() * baseActivity.maxLinesAdded * variance) + baseActivity.minLinesAdded
     ));
-    
+
     // Generate lines removed (usually less than added)
     const linesRemoved = Math.max(0, Math.floor(
       Math.random() * Math.min(linesAdded * 0.3, baseActivity.maxLinesRemoved)
     ));
-    
+
     // Generate files modified (related to lines changed)
     const totalLines = linesAdded + linesRemoved;
     const filesModified = Math.max(1, Math.floor(totalLines / 50) + Math.floor(Math.random() * 3));
@@ -212,10 +212,10 @@ export class DummyDataGenerator {
   private generateFileNames(count: number): string[] {
     const fileExtensions = ['.ts', '.tsx', '.js', '.jsx', '.py', '.java', '.cpp', '.h'];
     const fileBasenames = [
-      'component', 'service', 'util', 'helper', 'model', 'controller', 
+      'component', 'service', 'util', 'helper', 'model', 'controller',
       'view', 'test', 'spec', 'config', 'index', 'main', 'app'
     ];
-    
+
     const files: string[] = [];
     for (let i = 0; i < count; i++) {
       const basename = fileBasenames[Math.floor(Math.random() * fileBasenames.length)];
@@ -223,7 +223,7 @@ export class DummyDataGenerator {
       const filename = `${basename}${Math.floor(Math.random() * 100)}${extension}`;
       files.push(filename);
     }
-    
+
     return files;
   }
 

@@ -1,4 +1,4 @@
-import { Developer, CodeMetric, SnapshotData, isDeveloper, isCodeMetric, isSnapshotData } from '../types/index.js';
+import { Developer, CodeMetric, isDeveloper, isCodeMetric, isSnapshotData } from '../types/index.js';
 
 /**
  * JSON-based storage utilities for reading and writing application data
@@ -140,7 +140,7 @@ export class StorageUtils {
   static exportToJSON(developers: Developer[], metrics: CodeMetric[]): string {
     const exportData = {
       version: '1.0',
-      exportDate: new Date().toISOString(),
+      exportDate: new Date(),
       developers,
       metrics
     };
@@ -176,6 +176,11 @@ export class StorageUtils {
 
       if (parsedObj.metrics && Array.isArray(parsedObj.metrics)) {
         metrics = parsedObj.metrics.filter((metric: unknown) => {
+          // Convert timestamp string to Date if needed
+          if (typeof (metric as CodeMetric).timestamp === 'string') {
+            (metric as CodeMetric).timestamp = new Date((metric as CodeMetric).timestamp);
+          }
+          
           if (!isCodeMetric(metric)) {
             console.warn('Invalid metric in import data, skipping:', metric);
             return false;

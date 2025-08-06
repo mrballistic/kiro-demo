@@ -14,21 +14,21 @@
   - Write unit tests for type validation functions
   - _Requirements: 3.2, 6.1, 6.2_
 
-- [-] 3. Implement dummy data generator and storage utilities
+- [x] 3. Implement dummy data generator and storage utilities
   - Create dummy data generator with 5-8 developers and 3-6 months of varied metrics
   - Implement JSON-based data storage utilities for reading and writing
   - Create data validation functions for imported snapshot data
   - Write unit tests for dummy data generation and validation
   - _Requirements: 5.1, 5.2, 5.3_
 
-- [ ] 4. Build metrics calculation engine
+- [x] 4. Build metrics calculation engine
   - Implement MetricsCalculator class with lines-per-file ratio calculation
   - Create functions for calculating summary statistics and time-range aggregation
   - Implement data transformation utilities for snapshot-to-metrics conversion
   - Write comprehensive unit tests for all calculation functions
   - _Requirements: 2.1, 2.2, 2.3, 3.2_
 
-- [ ] 5. Create data repository implementation
+- [-] 5. Create data repository implementation
   - Implement DataRepository class with JSON file-based storage
   - Create methods for getting developers, metrics, and importing snapshot data
   - Implement error handling for malformed data and file operations

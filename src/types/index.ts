@@ -121,81 +121,100 @@ export interface ChartOptions {
 }
 
 // Type validation functions
-export function isDeveloper(obj: any): obj is Developer {
+export function isDeveloper(obj: unknown): obj is Developer {
   return (
     typeof obj === 'object' &&
     obj !== null &&
-    typeof obj.id === 'string' &&
-    typeof obj.name === 'string' &&
-    typeof obj.email === 'string' &&
-    Array.isArray(obj.metrics) &&
-    obj.metrics.every((metric: any) => isCodeMetric(metric))
+    typeof (obj as Record<string, unknown>).id === 'string' &&
+    typeof (obj as Record<string, unknown>).name === 'string' &&
+    typeof (obj as Record<string, unknown>).email === 'string' &&
+    Array.isArray((obj as Record<string, unknown>).metrics) &&
+    ((obj as Record<string, unknown>).metrics as unknown[]).every((metric: unknown) => isCodeMetric(metric))
   );
 }
 
-export function isCodeMetric(obj: any): obj is CodeMetric {
+export function isCodeMetric(obj: unknown): obj is CodeMetric {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+  
+  const metric = obj as Record<string, unknown>;
   return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    typeof obj.id === 'string' &&
-    typeof obj.developerId === 'string' &&
-    (obj.timestamp instanceof Date || (typeof obj.timestamp === 'string' && !isNaN(Date.parse(obj.timestamp)))) &&
-    typeof obj.linesAdded === 'number' &&
-    typeof obj.linesRemoved === 'number' &&
-    typeof obj.filesModified === 'number' &&
-    (obj.commitHash === undefined || typeof obj.commitHash === 'string') &&
-    (obj.repository === undefined || typeof obj.repository === 'string')
+    typeof metric.id === 'string' &&
+    typeof metric.developerId === 'string' &&
+    (metric.timestamp instanceof Date || (typeof metric.timestamp === 'string' && !isNaN(Date.parse(metric.timestamp)))) &&
+    typeof metric.linesAdded === 'number' &&
+    typeof metric.linesRemoved === 'number' &&
+    typeof metric.filesModified === 'number' &&
+    (metric.commitHash === undefined || typeof metric.commitHash === 'string') &&
+    (metric.repository === undefined || typeof metric.repository === 'string')
   );
 }
 
-export function isMetricsSummary(obj: any): obj is MetricsSummary {
+export function isMetricsSummary(obj: unknown): obj is MetricsSummary {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+  
+  const summary = obj as Record<string, unknown>;
   return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    typeof obj.totalLinesAdded === 'number' &&
-    typeof obj.totalLinesRemoved === 'number' &&
-    typeof obj.totalFiles === 'number' &&
-    typeof obj.linesPerFileRatio === 'number' &&
-    typeof obj.netLinesChanged === 'number' &&
-    typeof obj.timeRange === 'object' &&
-    obj.timeRange !== null &&
-    (obj.timeRange.start instanceof Date || (typeof obj.timeRange.start === 'string' && !isNaN(Date.parse(obj.timeRange.start)))) &&
-    (obj.timeRange.end instanceof Date || (typeof obj.timeRange.end === 'string' && !isNaN(Date.parse(obj.timeRange.end))))
+    typeof summary.totalLinesAdded === 'number' &&
+    typeof summary.totalLinesRemoved === 'number' &&
+    typeof summary.totalFiles === 'number' &&
+    typeof summary.linesPerFileRatio === 'number' &&
+    typeof summary.netLinesChanged === 'number' &&
+    typeof summary.timeRange === 'object' &&
+    summary.timeRange !== null &&
+    ((summary.timeRange as Record<string, unknown>).start instanceof Date || 
+     (typeof (summary.timeRange as Record<string, unknown>).start === 'string' && 
+      !isNaN(Date.parse((summary.timeRange as Record<string, unknown>).start as string)))) &&
+    ((summary.timeRange as Record<string, unknown>).end instanceof Date || 
+     (typeof (summary.timeRange as Record<string, unknown>).end === 'string' && 
+      !isNaN(Date.parse((summary.timeRange as Record<string, unknown>).end as string))))
   );
 }
 
-export function isSnapshotData(obj: any): obj is SnapshotData {
+export function isSnapshotData(obj: unknown): obj is SnapshotData {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+  
+  const snapshot = obj as Record<string, unknown>;
   return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    typeof obj.repository === 'string' &&
-    Array.isArray(obj.commits) &&
-    obj.commits.every((commit: any) => isCommitData(commit))
+    typeof snapshot.repository === 'string' &&
+    Array.isArray(snapshot.commits) &&
+    (snapshot.commits as unknown[]).every((commit: unknown) => isCommitData(commit))
   );
 }
 
-export function isCommitData(obj: any): obj is CommitData {
+export function isCommitData(obj: unknown): obj is CommitData {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+  
+  const commit = obj as Record<string, unknown>;
   return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    typeof obj.hash === 'string' &&
-    typeof obj.author === 'string' &&
-    typeof obj.email === 'string' &&
-    (obj.timestamp instanceof Date || (typeof obj.timestamp === 'string' && !isNaN(Date.parse(obj.timestamp)))) &&
-    typeof obj.linesAdded === 'number' &&
-    typeof obj.linesRemoved === 'number' &&
-    Array.isArray(obj.filesModified) &&
-    obj.filesModified.every((file: any) => typeof file === 'string')
+    typeof commit.hash === 'string' &&
+    typeof commit.author === 'string' &&
+    typeof commit.email === 'string' &&
+    (commit.timestamp instanceof Date || (typeof commit.timestamp === 'string' && !isNaN(Date.parse(commit.timestamp)))) &&
+    typeof commit.linesAdded === 'number' &&
+    typeof commit.linesRemoved === 'number' &&
+    Array.isArray(commit.filesModified) &&
+    (commit.filesModified as unknown[]).every((file: unknown) => typeof file === 'string')
   );
 }
 
-export function isDateRange(obj: any): obj is DateRange {
+export function isDateRange(obj: unknown): obj is DateRange {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
+  
+  const range = obj as Record<string, unknown>;
   return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    obj.start !== undefined &&
-    obj.end !== undefined &&
-    (obj.start instanceof Date || (typeof obj.start === 'string' && !isNaN(Date.parse(obj.start)))) &&
-    (obj.end instanceof Date || (typeof obj.end === 'string' && !isNaN(Date.parse(obj.end))))
+    range.start !== undefined &&
+    range.end !== undefined &&
+    (range.start instanceof Date || (typeof range.start === 'string' && !isNaN(Date.parse(range.start)))) &&
+    (range.end instanceof Date || (typeof range.end === 'string' && !isNaN(Date.parse(range.end))))
   );
 }
