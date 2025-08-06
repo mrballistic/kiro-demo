@@ -1,6 +1,22 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import styles from './Layout.module.css';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Box,
+  Tabs,
+  Tab,
+  Paper,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
+import {
+  Dashboard as DashboardIcon,
+  People as PeopleIcon,
+  CloudUpload as ImportIcon,
+} from '@mui/icons-material';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -8,51 +24,140 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const getTabValue = () => {
+    switch (location.pathname) {
+      case '/':
+        return 0;
+      case '/developers':
+        return 1;
+      case '/import':
+        return 2;
+      default:
+        return 0;
+    }
+  };
 
   return (
-    <div className={styles.layout}>
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <h1 className={styles.title}>Code Generation Tracker</h1>
-          <p className={styles.subtitle}>
-            Track and visualize developer code generation metrics
-          </p>
-        </div>
-      </header>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      {/* Header */}
+      <AppBar position="static" elevation={0}>
+        <Toolbar>
+          <Container maxWidth="xl">
+            <Box sx={{ textAlign: 'center', py: 2 }}>
+              <Typography 
+                variant="h1" 
+                component="h1" 
+                sx={{ 
+                  fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                  fontWeight: 700,
+                  mb: 1,
+                  color: 'white'
+                }}
+              >
+                Code Generation Tracker
+              </Typography>
+              <Typography 
+                variant="h6" 
+                component="p" 
+                sx={{ 
+                  fontSize: { xs: '1rem', sm: '1.2rem' },
+                  opacity: 0.9,
+                  fontWeight: 300,
+                  color: 'white'
+                }}
+              >
+                Track and visualize developer code generation metrics
+              </Typography>
+            </Box>
+          </Container>
+        </Toolbar>
+      </AppBar>
 
-      <nav className={styles.navigation}>
-        <div className={styles.navContent}>
-          <Link 
-            to="/" 
-            className={`${styles.navLink} ${location.pathname === '/' ? styles.active : ''}`}
+      {/* Navigation */}
+      <Paper 
+        elevation={1} 
+        sx={{ 
+          borderBottom: 1, 
+          borderColor: 'divider',
+          position: 'sticky',
+          top: 0,
+          zIndex: theme.zIndex.appBar - 1,
+        }}
+      >
+        <Container maxWidth="xl">
+          <Tabs
+            value={getTabValue()}
+            variant={isMobile ? 'fullWidth' : 'standard'}
+            scrollButtons="auto"
+            allowScrollButtonsMobile
+            sx={{
+              '& .MuiTab-root': {
+                textTransform: 'none',
+                fontWeight: 500,
+                fontSize: '1rem',
+                minHeight: { xs: 48, sm: 64 },
+              },
+            }}
           >
-            Dashboard
-          </Link>
-          <Link 
-            to="/developers" 
-            className={`${styles.navLink} ${location.pathname === '/developers' ? styles.active : ''}`}
-          >
-            Developers
-          </Link>
-          <Link 
-            to="/import" 
-            className={`${styles.navLink} ${location.pathname === '/import' ? styles.active : ''}`}
-          >
-            Import Data
-          </Link>
-        </div>
-      </nav>
+            <Tab
+              icon={<DashboardIcon />}
+              label="Dashboard"
+              component={Link}
+              to="/"
+              iconPosition={isMobile ? 'top' : 'start'}
+            />
+            <Tab
+              icon={<PeopleIcon />}
+              label="Developers"
+              component={Link}
+              to="/developers"
+              iconPosition={isMobile ? 'top' : 'start'}
+            />
+            <Tab
+              icon={<ImportIcon />}
+              label="Import Data"
+              component={Link}
+              to="/import"
+              iconPosition={isMobile ? 'top' : 'start'}
+            />
+          </Tabs>
+        </Container>
+      </Paper>
 
-      <main className={styles.main}>
-        <div className={styles.content}>
+      {/* Main Content */}
+      <Box component="main" sx={{ flex: 1, py: { xs: 2, sm: 3, md: 4 } }}>
+        <Container maxWidth="xl">
           {children}
-        </div>
-      </main>
+        </Container>
+      </Box>
 
-      <footer className={styles.footer}>
-        <p>&copy; 2024 Code Generation Tracker</p>
-      </footer>
-    </div>
+      {/* Footer */}
+      <Paper 
+        component="footer" 
+        elevation={0}
+        sx={{ 
+          mt: 'auto',
+          py: 2,
+          backgroundColor: theme.palette.mode === 'dark' ? 'grey.900' : 'grey.100',
+          borderTop: 1,
+          borderColor: 'divider',
+        }}
+      >
+        <Container maxWidth="xl">
+          <Typography 
+            variant="body2" 
+            color="text.secondary" 
+            align="center"
+            sx={{ opacity: 0.8 }}
+          >
+            &copy; 2024 Code Generation Tracker
+          </Typography>
+        </Container>
+      </Paper>
+    </Box>
   );
 };
 

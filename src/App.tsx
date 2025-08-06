@@ -1,18 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
+import { ThemeProvider } from './theme/ThemeProvider';
 import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
+import DeveloperList from './components/DeveloperList';
 import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
 
-// Placeholder components for routes that will be implemented in later tasks
-const DevelopersPage: React.FC = () => (
-  <div>
-    <h2>Developers</h2>
-    <p>Developer list and details will be implemented in upcoming tasks.</p>
-  </div>
-);
+// Placeholder component for import page that will be implemented in later tasks
+const DevelopersPage: React.FC = () => <DeveloperList />;
 
 const ImportPage: React.FC = () => (
   <div>
@@ -30,20 +27,22 @@ const NotFound: React.FC = () => (
 
 function App() {
   return (
-    <ErrorBoundary>
-      <AppProvider>
-        <Router>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/developers" element={<DevelopersPage />} />
-              <Route path="/import" element={<ImportPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
-        </Router>
-      </AppProvider>
-    </ErrorBoundary>
+    <ThemeProvider>
+      <ErrorBoundary>
+        <AppProvider>
+          <Router>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/developers" element={<DevelopersPage />} />
+                <Route path="/import" element={<ImportPage />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Layout>
+          </Router>
+        </AppProvider>
+      </ErrorBoundary>
+    </ThemeProvider>
   );
 }
 

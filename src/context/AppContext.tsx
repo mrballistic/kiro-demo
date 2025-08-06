@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-import { Developer, CodeMetric } from '../types';
+import React, { createContext, useContext, useReducer } from 'react';
+import type { ReactNode } from 'react';
+import type { Developer, CodeMetric } from '../types';
 
 interface AppState {
   developers: Developer[];

@@ -42,21 +42,21 @@
   - Create loading and error boundary components
   - _Requirements: 4.1, 4.3_
 
-- [ ] 7. Implement developer list component
+- [x] 7. Implement developer list component
   - Create DeveloperList component displaying all tracked developers
   - Implement developer selection functionality with state management
   - Add empty state handling when no developers exist
   - Write component tests for developer list rendering and interactions
   - _Requirements: 1.1, 1.4_
 
-- [ ] 8. Build developer detail view component
+- [x] 8. Build developer detail view component
   - Create DeveloperDetail component showing individual developer metrics
   - Implement metrics display including lines added, removed, and files modified
   - Add time-series data presentation in tabular format
   - Write component tests for metrics display and data handling
   - _Requirements: 1.2, 1.3_
 
-- [ ] 9. Integrate Chart.js for metrics visualization
+- [-] 9. Integrate Chart.js for metrics visualization
   - Install and configure Chart.js with React integration
   - Create MetricsChart component for time-series line charts
   - Implement chart configuration for lines added/removed over time
