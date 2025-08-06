@@ -70,21 +70,21 @@
   - Write component tests for summary calculations and display
   - _Requirements: 2.1, 2.2, 2.3, 2.4_
 
-- [-] 11. Build time range filtering functionality
+- [x] 11. Build time range filtering functionality
   - Create TimeRangeSelector component with date picker controls
   - Implement filtering logic to update charts and summaries based on selected range
   - Add preset time range options (last week, month, quarter)
   - Write tests for time range filtering and data updates
   - _Requirements: 4.4_
 
-- [ ] 12. Create data import functionality
+- [x] 12. Create data import functionality
   - Build DataImport component with file upload interface
   - Implement snapshot data parsing and validation
   - Add progress indicators and error handling for import process
   - Create user feedback for successful imports and validation errors
   - _Requirements: 3.1, 3.2, 3.3, 3.4_
 
-- [ ] 13. Add dummy data indicators and sample data management
+- [-] 13. Add dummy data indicators and sample data management
   - Implement visual indicators when displaying dummy/sample data
   - Create sample data toggle functionality for demonstration purposes
   - Add clear labeling and user guidance for dummy data features

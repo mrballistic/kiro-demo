@@ -5,18 +5,12 @@ import { ThemeProvider } from './theme/ThemeProvider';
 import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import DeveloperList from './components/DeveloperList';
+import DataImport from './components/DataImport';
 import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
 
 // Placeholder component for import page that will be implemented in later tasks
 const DevelopersPage: React.FC = () => <DeveloperList />;
-
-const ImportPage: React.FC = () => (
-  <div>
-    <h2>Import Data</h2>
-    <p>Data import functionality will be implemented in upcoming tasks.</p>
-  </div>
-);
 
 const NotFound: React.FC = () => (
   <div>
@@ -35,7 +29,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/developers" element={<DevelopersPage />} />
-                <Route path="/import" element={<ImportPage />} />
+                <Route path="/import" element={<DataImport />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>
