@@ -10,6 +10,6 @@ describe('App', () => {
 
   it('renders the application description', () => {
     render(<App />)
-    expect(screen.getByText('A tool for tracking and visualizing developer code generation metrics.')).toBeInTheDocument()
+    expect(screen.getByText('Track and visualize developer code generation metrics')).toBeInTheDocument()
   })
 })

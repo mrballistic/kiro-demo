@@ -28,14 +28,14 @@
   - Write comprehensive unit tests for all calculation functions
   - _Requirements: 2.1, 2.2, 2.3, 3.2_
 
-- [-] 5. Create data repository implementation
+- [x] 5. Create data repository implementation
   - Implement DataRepository class with JSON file-based storage
   - Create methods for getting developers, metrics, and importing snapshot data
   - Implement error handling for malformed data and file operations
   - Write integration tests for data repository operations
   - _Requirements: 3.1, 3.3, 3.4, 6.3_
 
-- [ ] 6. Build basic React application shell
+- [x] 6. Build basic React application shell
   - Create main App component with routing and global state management
   - Implement basic layout with header, navigation, and content areas
   - Set up responsive CSS structure using CSS Modules
