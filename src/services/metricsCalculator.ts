@@ -323,7 +323,7 @@ export class DataTransformer {
     });
 
     const developers: Array<{ id: string, name: string, email: string }> = [];
-    developerMap.forEach((dev, email) => {
+    developerMap.forEach((dev) => {
       developers.push({
         id: `dev-${String(developerIdCounter).padStart(3, '0')}`,
         name: dev.name,

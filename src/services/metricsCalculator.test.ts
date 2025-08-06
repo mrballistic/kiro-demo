@@ -59,7 +59,9 @@ describe('MetricsCalculator', () => {
     });
 
     it('should return 0 for null/undefined metrics', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(calculator.calculateLinesPerFileRatio(null as any)).toBe(0);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(calculator.calculateLinesPerFileRatio(undefined as any)).toBe(0);
     });
 
@@ -399,7 +401,9 @@ describe('DataTransformer', () => {
     });
 
     it('should handle null/undefined snapshot', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(transformer.transformSnapshotToMetrics(null as any)).toHaveLength(0);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(transformer.transformSnapshotToMetrics(undefined as any)).toHaveLength(0);
     });
 
@@ -411,6 +415,7 @@ describe('DataTransformer', () => {
             hash: 'abc123',
             author: 'John Doe',
             email: 'john.doe@example.com',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             timestamp: '2024-01-01T10:00:00Z' as any, // String instead of Date
             linesAdded: 100,
             linesRemoved: 20,
@@ -467,7 +472,9 @@ describe('DataTransformer', () => {
     });
 
     it('should handle null/undefined snapshot', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(transformer.extractDevelopersFromSnapshot(null as any)).toHaveLength(0);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(transformer.extractDevelopersFromSnapshot(undefined as any)).toHaveLength(0);
     });
   });
@@ -505,6 +512,7 @@ describe('DataTransformer', () => {
       const commitsWithStringDates: CommitData[] = [
         {
           ...sampleSnapshot.commits[0],
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           timestamp: '2024-01-01T10:00:00Z' as any
         }
       ];
@@ -529,6 +537,7 @@ describe('DataTransformer', () => {
       const commitsWithInvalidDates: CommitData[] = [
         {
           ...sampleSnapshot.commits[0],
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           timestamp: 'invalid-date' as any
         }
       ];

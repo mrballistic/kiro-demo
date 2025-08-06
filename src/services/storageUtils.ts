@@ -1,4 +1,5 @@
-import { Developer, CodeMetric, isDeveloper, isCodeMetric, isSnapshotData } from '../types/index.js';
+import type { Developer, CodeMetric } from '../types/index.js';
+import { isDeveloper, isCodeMetric, isSnapshotData } from '../types/index.js';
 
 /**
  * JSON-based storage utilities for reading and writing application data
@@ -256,7 +257,7 @@ export class StorageUtils {
   /**
    * Custom JSON replacer for handling Date objects
    */
-  private static dateReplacer(key: string, value: unknown): unknown {
+  private static dateReplacer(_key: string, value: unknown): unknown {
     if (value instanceof Date) {
       return { __type: 'Date', value: value.toISOString() };
     }
@@ -266,7 +267,7 @@ export class StorageUtils {
   /**
    * Custom JSON reviver for handling Date objects
    */
-  private static dateReviver(key: string, value: unknown): unknown {
+  private static dateReviver(_key: string, value: unknown): unknown {
     if (typeof value === 'object' && value !== null && 
         '__type' in value && 'value' in value &&
         (value as { __type: string }).__type === 'Date') {

@@ -3,8 +3,7 @@ import type {
   Developer, 
   CodeMetric, 
   SnapshotData, 
-  DateRange,
-  CommitData
+  DateRange
 } from '../types/index.js';
 import { StorageUtils, DataValidator } from './storageUtils.js';
 import { dummyDataGenerator } from './dummyDataGenerator.js';
@@ -25,7 +24,14 @@ export class JSONDataRepository implements DataRepository {
   async getDevelopers(): Promise<Developer[]> {
     try {
       await this.ensureCacheValid();
-      return [...(this.developersCache || [])];
+      // Return deep copies to prevent external modifications
+      return (this.developersCache || []).map(dev => ({
+        ...dev,
+        metrics: dev.metrics.map(metric => ({
+          ...metric,
+          timestamp: new Date(metric.timestamp)
+        }))
+      }));
     } catch (error) {
       console.error('Failed to get developers:', error);
       throw new Error(`Unable to retrieve developers: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -331,13 +337,27 @@ export class JSONDataRepository implements DataRepository {
       }
     });
 
-    // Merge metrics (avoid duplicates by commit hash and developer)
+    // Merge metrics (avoid duplicates by commit hash, timestamp, and developer email)
     const metricsSet = new Set<string>();
     const mergedMetrics: CodeMetric[] = [];
 
+    // Create a map to get developer email by ID for both existing and new developers
+    const developerEmailMap = new Map<string, string>();
+    
+    // Add existing developers to email map
+    existingDevelopers.forEach(dev => {
+      developerEmailMap.set(dev.id, dev.email);
+    });
+    
+    // Add new developers to email map
+    newDevelopers.forEach(dev => {
+      developerEmailMap.set(dev.id, dev.email);
+    });
+
     // Add existing metrics
     existingMetrics.forEach(metric => {
-      const key = `${metric.developerId}-${metric.commitHash}-${metric.timestamp.getTime()}`;
+      const developerEmail = developerEmailMap.get(metric.developerId) || 'unknown';
+      const key = `${developerEmail}-${metric.commitHash || 'no-hash'}-${metric.timestamp.getTime()}-${metric.linesAdded}-${metric.linesRemoved}`;
       if (!metricsSet.has(key)) {
         metricsSet.add(key);
         mergedMetrics.push(metric);
@@ -346,7 +366,8 @@ export class JSONDataRepository implements DataRepository {
 
     // Add new metrics
     newMetrics.forEach(metric => {
-      const key = `${metric.developerId}-${metric.commitHash}-${metric.timestamp.getTime()}`;
+      const developerEmail = developerEmailMap.get(metric.developerId) || 'unknown';
+      const key = `${developerEmail}-${metric.commitHash || 'no-hash'}-${metric.timestamp.getTime()}-${metric.linesAdded}-${metric.linesRemoved}`;
       if (!metricsSet.has(key)) {
         metricsSet.add(key);
         mergedMetrics.push(metric);

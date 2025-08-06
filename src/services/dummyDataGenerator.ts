@@ -1,4 +1,4 @@
-import { Developer, CodeMetric, SnapshotData, CommitData } from '../types/index.js';
+import type { Developer, CodeMetric, SnapshotData, CommitData } from '../types/index.js';
 
 /**
  * Generates dummy data for the code generation tracker application
